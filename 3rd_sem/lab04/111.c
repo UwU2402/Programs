@@ -1,0 +1,14 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+struct Node{    int data;    struct Node *next;    }*start;static void reverse(struct Node** head_ref){    struct Node* prev = NULL;    struct Node* current = *head_ref;    struct Node* next = NULL;    while (current != NULL) {        next = current->next;        current->next = prev;        prev = current;        current = next;    }    *head_ref = prev;}void insert();struct Node * insertAtIndex(struct Node *head, int data, int index);void display(struct Node *head);void deleteAtIndex(struct Node * head, int index);
+int main(){    int t;    int a,m,n;    scanf("%d",&t);    while(t--)    {      start=NULL;      int op;            bool opt=true;      while(opt){          printf("1.Create\n2.traverse\n3.Insert\n4.Delete\n5.reverse\n\nEnter your option:");            scanf("%d",&op);        switch(op){            case 1:                insert();                break;                            case 2:                display(start);                break;                            case 3:                                printf("Enter the data n position: ");                scanf("%d%d",&a,&m);                insertAtIndex(start,a,m);                break;                            case 4:                                printf("Enter position: ");                scanf("%d",&n);                deleteAtIndex(start,n);                break;            case 5:                reverse(&start);                display(start);                break;            default:                opt=false;                      }       }    }    return 0;
+}
+
+ void insert() {     int n,value,i;     printf("Enter the Size of List: ");     scanf("%d",&n);     struct Node *temp;     for(i=0;i<n;i++)     {         scanf("%d",&value);         if(i==0)         {              start=(struct Node *) malloc( sizeof(struct Node) );              start->data=value;              start->next=NULL;              temp=start;              continue;         }         else         {             temp->next= (struct Node *) malloc( sizeof(struct Node) );             temp=temp->next;             temp->data=value;             temp->next=NULL;         }     } }
+void display(struct Node *head){    while(head!=NULL)   {       printf("%d ",head->data);       head=head->next;   }   printf("\n");}
+
+
+struct Node * insertAtIndex(struct Node *head, int data, int index){    struct Node * ptr = (struct Node *) malloc(sizeof(struct Node));    struct Node * p = head;    int i = 0;
+    while (i!=index-1)    {        p = p->next;        i++;    }    ptr->data = data;    ptr->next = p->next;    p->next = ptr;    return head;}
+void deleteAtIndex(struct Node * head, int index){    struct Node *p = head;    struct Node *q = head->next;    for (int i = 0; i < index-1; i++)    {        p = p->next;        q = q->next;    }        p->next = q->next;    free(q);}
